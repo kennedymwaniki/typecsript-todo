@@ -1,0 +1,90 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+
+.app {
+  margin: 0;
+  padding: 0;
+}
+h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.form {
+  margin: 0;
+}
+
+.banner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 300px; // Full height of the viewport
+  color: white;
+}
+
+input[type="text"] {
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: none;
+  margin-right: 10px;
+}
+
+input[type="checkbox"] {
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 50px;
+  border: none;
+  margin-right: 10px;
+}
+
+button {
+  padding: 10px 15px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: none;
+  background-color: #4caf50;
+  color: white;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+ol {
+  list-style-type: none;
+  padding: 40px;
+}
+
+li {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 10px;
+  margin: 2px;
+  display: flex;
+  border: 1px solid black;
+  align-items: center;
+  justify-content: space-between;
+
+  &.completed span {
+    text-decoration: line-through;
+  }
+
+  span {
+    flex-grow: 1;
+    text-align: left;
+    padding: 0 10px;
+  }
+
+  input[type="checkbox"] {
+    margin-right: 10px;
+  }
+
+  button {
+    background-color: #008cba;
+  }
+
+  .delete {
+    background-color: #f44336;
+  }
+}
