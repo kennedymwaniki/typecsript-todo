@@ -1,21 +1,18 @@
-import { useReducer, useState, useEffect } from "react";
-import "../App.scss";
-import bgImage from "../assets/images/bg-desktop-light.jpg";
-import todoReducer from "./TodoReducer";
-import TodoItem from "./TodoItem";
+import React, { useReducer, useState, useEffect } from "react";
+import "./App.scss";
+import bgImage from "./assets/images/bg-desktop-light.jpg";
+import todoReducer from "./components/TodoReducer";
 
 interface Todo {
   id: number;
   todo: string;
   completed: boolean;
 }
-
 const initialTodos: Todo[] = [
   { id: 1, todo: "Buy groceries", completed: false },
   { id: 2, todo: "Do laundry", completed: false },
   { id: 3, todo: "Write report", completed: false },
 ];
-
 const Todo = () => {
   const [todos, dispatch] = useReducer(todoReducer, [], () => {
     const localData = localStorage.getItem("todos");
@@ -27,8 +24,10 @@ const Todo = () => {
   }, [todos]);
 
   const [newTodo, setNewTodo] = useState("");
+  const [editId, setEditId] = useState<number | null>(null);
+  const [editText, setEditText] = useState("");
 
-  const handleAddTodo = (e: { preventDefault: () => void }) => {
+  const handleAddTodo = (e: React.FormEvent) => {
     e.preventDefault();
     if (newTodo.trim()) {
       dispatch({ type: "addTodo", payload: { text: newTodo } });
@@ -41,7 +40,17 @@ const Todo = () => {
   };
 
   const handleEditTodo = (id: number, text: string) => {
-    dispatch({ type: "editTodo", payload: { id, text } });
+    setEditId(id);
+    setEditText(text);
+  };
+
+  const handleUpdateTodo = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (editId !== null && editText.trim()) {
+      dispatch({ type: "editTodo", payload: { id: editId, text: editText } });
+      setEditId(null);
+      setEditText("");
+    }
   };
 
   const handleToggleTodo = (id: number) => {
@@ -75,13 +84,39 @@ const Todo = () => {
       </div>
       <ol>
         {todos.map((todo) => (
-          <TodoItem
-            key={todo.id}
-            todo={todo}
-            onDelete={handleDeleteTodo}
-            onEdit={handleEditTodo}
-            onToggle={handleToggleTodo}
-          />
+          <li key={todo.id} className={todo.completed ? "completed" : ""}>
+            {editId === todo.id ? (
+              <form onSubmit={handleUpdateTodo}>
+                <input
+                  type="text"
+                  value={editText}
+                  onChange={(e) => setEditText(e.target.value)}
+                />
+                <button type="submit">Update</button>
+              </form>
+            ) : (
+              <>
+                <input
+                  type="checkbox"
+                  checked={todo.completed}
+                  onChange={() => handleToggleTodo(todo.id)}
+                />
+                <span>{todo.todo}</span>
+                <button
+                  className="edit"
+                  onClick={() => handleEditTodo(todo.id, todo.todo)}
+                >
+                  ✏
+                </button>
+                <button
+                  className="delete"
+                  onClick={() => handleDeleteTodo(todo.id)}
+                >
+                  X
+                </button>
+              </>
+            )}
+          </li>
         ))}
       </ol>
     </div>
