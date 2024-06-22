@@ -16,7 +16,7 @@ interface Todo {
     | { type: "editTodo"; payload: { id: number; text: string } }
     | { type: "toggleTodo"; payload: { id: number } };
   
-  ///my initial array of todos
+
 
   
   // my todoRedcer function

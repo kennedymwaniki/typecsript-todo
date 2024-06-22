@@ -54,13 +54,14 @@ button {
 
 ol {
   list-style-type: none;
-  padding: 40px;
+  // padding: 4px;
+  margin: 4px;
 }
 
 li {
   background: rgba(255, 255, 255, 0.1);
   padding: 10px;
-  margin: 2px;
+  // margin: 2px;
   display: flex;
   border: 1px solid black;
   align-items: center;
