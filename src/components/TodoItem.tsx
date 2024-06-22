@@ -13,7 +13,7 @@ interface TodoItemProps {
 }
 
 const TodoItem: React.FC<TodoItemProps> = ({ todo }) => {
-  const [todos, dispatch] = useReducer(todoReducer, []);
+  const [, dispatch] = useReducer(todoReducer, []);
   const [editId, setEditId] = useState<number | null>(null);
   const [editText, setEditText] = useState("");
 
