@@ -9,11 +9,13 @@ interface Todo {
   todo: string;
   completed: boolean;
 }
+
 const initialTodos: Todo[] = [
   { id: 1, todo: "Buy groceries", completed: false },
   { id: 2, todo: "Do laundry", completed: false },
   { id: 3, todo: "Write report", completed: false },
 ];
+
 const Todo = () => {
   const [todos, dispatch] = useReducer(todoReducer, [], () => {
     const localData = localStorage.getItem("todos");
@@ -23,6 +25,7 @@ const Todo = () => {
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
+
   const [newTodo, setNewTodo] = useState("");
 
   const handleAddTodo = (e: { preventDefault: () => void }) => {
@@ -31,6 +34,18 @@ const Todo = () => {
       dispatch({ type: "addTodo", payload: { text: newTodo } });
       setNewTodo("");
     }
+  };
+
+  const handleDeleteTodo = (id: number) => {
+    dispatch({ type: "deleteTodo", payload: { id } });
+  };
+
+  const handleEditTodo = (id: number, text: string) => {
+    dispatch({ type: "editTodo", payload: { id, text } });
+  };
+
+  const handleToggleTodo = (id: number) => {
+    dispatch({ type: "toggleTodo", payload: { id } });
   };
 
   return (
@@ -58,9 +73,17 @@ const Todo = () => {
           </button>
         </form>
       </div>
-      {todos.map((todo) => (
-        <TodoItem key={todo.id} todo={todo} />
-      ))}
+      <ol>
+        {todos.map((todo) => (
+          <TodoItem
+            key={todo.id}
+            todo={todo}
+            onDelete={handleDeleteTodo}
+            onEdit={handleEditTodo}
+            onToggle={handleToggleTodo}
+          />
+        ))}
+      </ol>
     </div>
   );
 };
