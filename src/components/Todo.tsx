@@ -1,6 +1,6 @@
 import React, { useReducer, useState, useEffect } from "react";
 import "./App.scss";
-import bgImage from "./assets/images/bg-desktop-light.jpg";
+import bgImage from "../assets/images/bg-desktop-light.jpg";
 import todoReducer from "./TodoReducer";
 
 interface Todo {
